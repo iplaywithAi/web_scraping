@@ -1,3 +1,5 @@
+'use strict'
+
 import puppeteer from "puppeteer";
 
 (async () => {
@@ -46,4 +48,5 @@ import puppeteer from "puppeteer";
 
     console.log(screenshots);
 })();
+
 
