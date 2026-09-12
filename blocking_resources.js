@@ -2,7 +2,7 @@
 
 import puppeteer from "puppeteer"
 
-(async () =>{
+(async () => {
         const browser = await puppeteer.launch({headless:false})
         const page = await browser.newPage()
 
@@ -24,8 +24,7 @@ import puppeteer from "puppeteer"
             }
              });
 
-            await page.goto(url, {waitUntil: "domcontentloaded", timeout:6000})
-
+            await page.goto(url, {waitUntil: "domcontentloaded", timeout:60000})
 
 
         }catch(err){
