@@ -1,5 +1,7 @@
-// scraper.js
+
 import puppeteer from 'puppeteer';
+
+// definne the resource types and URL patterns to block in a set
 
 const BLOCKED_RESOURCE_TYPES = new Set(['image', 'stylesheet', 'font', 'media']);
 const BLOCKED_URL_PATTERNS = ['analytics', 'doubleclick', 'facebook.net'];
@@ -8,6 +10,7 @@ export async function scrapePage(url) {
   const browser = await puppeteer.launch({headless:false});
   const page = await browser.newPage();
 
+  //initiate request interception
   await page.setRequestInterception(true);
 
   page.on('request', (req) => {
