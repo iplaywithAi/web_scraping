@@ -5,7 +5,11 @@ import puppeteer from 'puppeteer';
 // exportToExcel.js
 import * as XLSX from 'xlsx';
 
-export async function scrapeJumiaNikeShoes(searchUrl = 'https://www.jumia.co.ke/catalog/?q=shoes') {
+// exportToCsv.js
+import { Parser } from 'json2csv';
+import { writeFileSync } from 'fs';
+
+export async function scrapeJumiaNikeShoes(searchUrl = 'https://www.jumia.co.ke/catalog/?q=shoes'){
   let browser;
 
   try {
@@ -16,7 +20,7 @@ export async function scrapeJumiaNikeShoes(searchUrl = 'https://www.jumia.co.ke/
 
     const page = await browser.newPage();
   
-    // Block heavy resources we don't need 
+    // Block resources not needed
     await page.setRequestInterception(true);
     page.on('request', (req) => {
       const blockedTypes = ['image', 'stylesheet', 'font', 'media'];
@@ -24,11 +28,9 @@ export async function scrapeJumiaNikeShoes(searchUrl = 'https://www.jumia.co.ke/
     });
 
     await page.goto(searchUrl, { waitUntil: 'networkidle2', timeout: 60000 });
-
-    // Wait for product listings to load
     await page.waitForSelector('article.prd', { timeout: 15000 });
 
-    // Extract product data in the page context
+    // Extract product data 
     const products = await page.evaluate(() => {
 
       const items = document.querySelectorAll('article.prd');
@@ -74,7 +76,10 @@ export async function scrapeJumiaNikeShoes(searchUrl = 'https://www.jumia.co.ke/
   }
 }
 
-export  function exportToExcel(products, filename = 'jumia_nike_shoes.xlsx') {
+
+///EXCEL
+export function exportToExcel(products, filename = 'jumia_nike_shoes.xlsx') {
+
   try {
     // Convert array of objects into a worksheet
     const worksheet = XLSX.utils.json_to_sheet(products);
@@ -97,5 +102,28 @@ export  function exportToExcel(products, filename = 'jumia_nike_shoes.xlsx') {
 
   } catch (error) {
     console.error('Error exporting to Excel:', error.message);
+  }
+}
+
+
+
+//CSV
+
+export function exportToCsv(products, filename = 'jumia_nike_shoes.csv') {
+
+  try {
+    if (!products || products.length === 0) {
+      console.log('No products to export.');
+      return;
+    }
+
+    const parser = new Parser();
+    const csv = parser.parse(products);
+
+    writeFileSync(filename, '\uFEFF' + csv, 'utf8');
+    console.log(`Saved ${products.length} products to ${filename}`);
+
+  } catch (error) {
+    console.error('Error exporting to CSV:', error.message);
   }
 }
