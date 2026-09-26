@@ -1,21 +1,19 @@
-import { scrapeJumiaNikeShoes } from './jumia.js';
-import { exportToExcel } from './jumia.js';
-import { exportToCsv } from './jumia.js';
+import { scrapeJumiaNikeShoes , exportToExcel, exportToCsv} from './jumia.js';
 
 //print to console
-const shoes = await scrapeJumiaNikeShoes();
-console.log(shoes);
+const data = await scrapeJumiaNikeShoes();
+console.log(data);
 
 //excel
-if (shoes.length > 0) {
-  exportToExcel(shoes);
+if (data.length > 0) {
+  exportToExcel(data);
 } else {
   console.log('No products to export.');
 }
 
 //csv file
-if (shoes.length > 0) {
-  exportToCsv(shoes);
+if (data.length > 0) {
+  exportToCsv(data);
 } else {
   console.log('No products to export.');
 }

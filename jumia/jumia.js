@@ -37,22 +37,22 @@ export async function scrapeJumiaNikeShoes(searchUrl = 'https://www.jumia.co.ke/
       const results = [];
 
       items.forEach((item) => {
-        const nameEl = item.querySelector('.name');
-        const priceEl = item.querySelector('.prc');
-        const oldPriceEl = item.querySelector('.old');
-        const ratingEl = item.querySelector('.stars._s');
-        const discountEl = item.querySelector('.bdg._dsct');
-        const linkEl = item.querySelector('a.core');
-        const imgEl = item.querySelector('img.img');
+        const name = item.querySelector('.name');
+        const price= item.querySelector('.prc');
+        const oldPrice = item.querySelector('.old');
+        const rating = item.querySelector('.stars._s');
+        const discount = item.querySelector('.bdg._dsct');
+        const link = item.querySelector('a.core');
+        const img = item.querySelector('img.img');
 
         results.push({
-          name: nameEl ? nameEl.textContent.trim() : null,
-          price: priceEl ? priceEl.textContent.trim() : null,
-          oldPrice: oldPriceEl ? oldPriceEl.textContent.trim() : null,
-          discount: discountEl ? discountEl.textContent.trim() : null,
-          rating: ratingEl ? ratingEl.getAttribute('style') : null,
-          url: linkEl ? 'https://www.jumia.co.ke' + linkEl.getAttribute('href') : null,
-          image: imgEl ? (imgEl.getAttribute('data-src') || imgEl.getAttribute('src')) : null
+          name: name ? name.textContent.trim() : null,
+          price: price ? price.textContent.trim() : null,
+          oldPrice: oldPrice ? oldPrice.textContent.trim() : null,
+          discount: discount? discount.textContent.trim() : null,
+          rating: rating ? rating.getAttribute('style') : null,
+          url: link ? 'https://www.jumia.co.ke' + link.getAttribute('href') : null,
+          image: img ? (img.getAttribute('data-src') || img.getAttribute('src')) : null
         });
         
       });
@@ -76,13 +76,11 @@ export async function scrapeJumiaNikeShoes(searchUrl = 'https://www.jumia.co.ke/
   }
 }
 
-
-///EXCEL
+/*--------------EXCEL-------------*/
 export function exportToExcel(products, filename = 'jumia_nike_shoes.xlsx') {
 
   try {
-    // Convert array of objects into a worksheet
-    const worksheet = XLSX.utils.json_to_sheet(products);
+     const worksheet = XLSX.utils.json_to_sheet(products);
 
      worksheet['!cols'] = [
       { wch: 40 }, // name
@@ -105,10 +103,7 @@ export function exportToExcel(products, filename = 'jumia_nike_shoes.xlsx') {
   }
 }
 
-
-
-//CSV
-
+/*--------------CSV-------------*/
 export function exportToCsv(products, filename = 'jumia_nike_shoes.csv') {
 
   try {

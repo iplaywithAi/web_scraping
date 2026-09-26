@@ -10,24 +10,18 @@ import puppeteer from "puppeteer";
         "https://scrapingbee.com",
         "https://medium.com",
         "https://www.google.com"
-        //more urlss
     ];
 
     const screenshots = [];
 
     try {
         for (const url of urls) {
-
             try {
                 await page.goto(url, {waitUntil: "domcontentloaded", timeout: 60000  });
-                
-
-               const screenshotPath =
+                 const screenshotPath =
                     `./${url.replace(/[:\/.]/g, "_")}.jpg`;
-
                 await page.screenshot({  path: screenshotPath,  type: "jpeg"  });
-                
-                             
+                                           
                 screenshots.push({
                     url,
                     screenshotPath
