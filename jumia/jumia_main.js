@@ -67,8 +67,7 @@ export async function scrapeJumiaNikeShoes(searchUrl = 'https://www.jumia.co.ke/
   
 }
 
-exportToExcel;
-exportToCsv;
+
 
 
 
