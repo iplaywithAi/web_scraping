@@ -3,8 +3,6 @@
 import puppeteer from 'puppeteer';
 import {autoScroll} from './scroll.js';
 import  {scrapeCurrentPage} from './jumia_scraper.js';
-import  {exportToExcel} from './jumia_excel.js';
-import  {exportToCsv} from './jumia_csv.js';
 
 
 export async function scrapeJumiaNikeShoes(searchUrl = 'https://www.jumia.co.ke/catalog/?q=shoes', maxPages = 5) {
